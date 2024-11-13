@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block titulo %} Editar Paciente {% endblock %}
+
+{% block contenido %}
+<div class="card"></div>
+    <div class="card-header" style="background-color: #87CEEB; color: white;">
+        Editar información del paciente
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del paciente</h4>
+        <p class="card-footer text-muted">PACIENTE mensaje</p>
+    {% include 'pacientes/form.html' %}
+
+    </div>
+    <div class="card-footer text-muted">
+        Los datos ingresados son de exclusiva responsabilidad del especialista a cargo
+    </div>
+</div>
+
+
+{% endblock %} 

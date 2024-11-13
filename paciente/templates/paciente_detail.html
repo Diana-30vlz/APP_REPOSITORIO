@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+<h1> AQUI SE VERAN LOS REGISTROS DE EXPEDIENTES CLINICOS DE UN PACIENTE </h1>
+{% block titulo %} Expediente clínico {% endblock %}
+{% block contenido %}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <form class="form-inline" method="GET" action="{% url 'pacientes' %}">
+            <input class="form-control mr-sm-2" type="text" placeholder="Buscar informe" name="query" aria-label="Buscar homoclave" style="width: 900px;">
+            <button class="btn btn-primary" type="text" style="background-color: #004b69; color: white;">Buscar</button>
+        </form>
+        <hr>
+        <a class="btn" href="{% url 'crear_informe' paciente.id_paciente%}" role="button" style="background-color: #182995; color: white;">Crear nuevo informe</a>
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Informes</h4>
+        <table class="table" style="width: 80%; height: auto; margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th>Homoclave</th> <!-- Cambiado para mostrar la homoclave -->
+                    <th>Fecha del informe</th>
+                    <th>Comentarios</th>
+                    <th>           </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registro in registros_ecg %}
+                <tr>
+                    <td>{{ registro.homoclave }}</td> <!-- Aquí se muestra la homoclave -->
+                    <td>{{ registro.fecha_informe|date:"d M Y" }}</td>
+                    <td>{{ registro.comentarios }}</td>
+                    <td>
+                        <div style="display: flex; gap: 15px; justify-content: center; align-items: center; padding: 5px;">
+                            <a class="btn btn-info" href="{% url 'ver_grafico' registro.id_ecg %}"  role="button" style="background-color: #1a5edd; color: white;">Informe completo</a>
+                            <a class="btn btn-danger" href="{% url 'eliminar_informe' registro.id_ecg %}" onclick="return confirm('¿Estás seguro de eliminar el informe?')" role="button" style="background-color: #de4444; color: white;">Borrar</a>
+
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">No hay registros disponibles.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

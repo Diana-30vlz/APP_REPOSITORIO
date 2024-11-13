@@ -1,0 +1,153 @@
+/* stylesCreate_Paciente.css */
+
+/* Estilo básico para el cuerpo del documento */
+body {
+    font-family: 'Arial', sans-serif; /* Fuente del documento */
+    margin: 0; /* Sin márgenes en el cuerpo */
+    padding: 0; /* Sin padding en el cuerpo */
+    /* styles.css */
+
+    
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url("{% static 'img/medicina.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que se repita */
+    
+}
+
+
+/* Contenedor del formulario */
+form {
+    max-width: 800px; /* Ancho máximo del formulario */
+    margin: 40px auto; /* Centra el formulario horizontalmente */
+    padding: 30px; /* Espaciado interno del formulario */
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    border-radius: 20px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+
+
+/* Estilo para el título */
+h1 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+
+/* Estilo para los grupos de formulario */
+.form-group {
+    margin-bottom: 20px; /* Espaciado entre los grupos de formularios */
+}
+
+/* Estilo para las etiquetas */
+label {
+    display: block; /* Hace que la etiqueta ocupe toda la línea */
+    margin-bottom: 8px; /* Margen inferior de las etiquetas */
+    font-weight: 600; /* Texto en negrita para las etiquetas */
+    color: #495057; /* Color del texto de las etiquetas */
+}
+
+/* Estilo para los campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"] {
+    width: 100%; /* Hace que los campos de entrada ocupen todo el ancho disponible */
+    padding: 12px; /* Espaciado interno */
+    border: 1px solid #ced4da; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transición suave para el color del borde y sombra */
+}
+
+/* Estilo para los campos de entrada al tener el foco */
+input:focus {
+    border-color: #80bdff; /* Color de borde al tener el foco */
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5); /* Sombra al enfocar el campo */
+    outline: none; /* Sin borde exterior al tener el foco */
+}
+
+/* Estilo para el botón */
+.btn {
+    padding: 12px 15px; /* Espaciado interno del botón */
+    width: auto; /* Hace que el botón ocupe todo el ancho disponible */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    margin: 30px auto ;
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px; /* Tamaño de fuente */
+    cursor: pointer; /* Cursor en forma de mano al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave para el color de fondo */
+}
+
+/* Estilo para el botón al pasar el ratón */
+.btn:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Eleva ligeramente el botón al pasar el ratón */
+}
+
+/* Estilo para mensajes de error */
+.error {
+    color: red; /* Color del texto de error */
+    margin: 10px 0; /* Margen vertical */
+    text-align: center; /* Centra el mensaje de error */
+    font-weight: bold; /* Texto en negrita para mensajes de error */
+}
+
+
+.radio-group {
+    display: flex; /* Usa flexbox para alinear los botones */
+    margin-top: 10px; /* Espacio entre el label y los botones */
+}
+
+.radio-option {
+    display: flex;
+    align-items: center; /* Alinear texto con el círculo */
+    margin-right: 20px; /* Espacio entre las opciones */
+    cursor: pointer; /* Cambiar cursor al pasar sobre la opción */
+}
+
+.radio-option input {
+    display: none; /* Oculta el botón de radio original */
+}
+
+.custom-radio {
+    width: 20px; /* Tamaño del círculo */
+    height: 20px; /* Tamaño del círculo */
+    border: 2px solid #007bff; /* Color del borde */
+    border-radius: 50%; /* Crea un círculo */
+    margin-right: 8px; /* Espacio entre el círculo y el texto */
+    position: relative; /* Necesario para el pseudo-elemento */
+    transition: background-color 0.3s; /* Animación suave */
+}
+
+.radio-option input:checked + .custom-radio {
+    background-color: #007bff; /* Color de fondo al estar seleccionado */
+}
+
+.radio-option input:checked + .custom-radio::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px; /* Tamaño del punto interno */
+    height: 10px; /* Tamaño del punto interno */
+    background-color: white; /* Color del punto interno */
+    border-radius: 50%; /* Hace que sea un círculo */
+    transform: translate(-50%, -50%); /* Centra el punto */
+}

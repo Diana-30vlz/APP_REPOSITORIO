@@ -1,0 +1,69 @@
+/* Estilos generales */
+body {
+    background-color: #f7f9fc; /* Color de fondo claro para la página */
+    font-family: 'Roboto', sans-serif; /* Fuente personalizada */
+    color: #333; /* Color de texto para mejor legibilidad */
+}
+
+/* Contenedor principal */
+.container {
+    background-color: #ffffff; /* Fondo blanco para el contenido */
+    padding: 20px; /* Espacio interior */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar profundidad */
+    max-width: 800px; /* Ancho máximo para el contenedor */
+    margin: 0 auto; /* Centrar el contenedor */
+}
+
+/* Título */
+h1.text-center {
+    color: #031931; /* Color de texto azul para el título */
+    margin-bottom: 20px; /* Espacio debajo del título */
+    font-size: 2.2rem; /* Tamaño del título */
+    font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilos de la tabla */
+.table {
+    width: 100%; /* Tabla ocupa todo el ancho del contenedor */
+    margin-bottom: 20px; /* Espacio debajo de la tabla */
+}
+
+.table thead {
+    background-color: #14171a; /* Fondo azul para el encabezado */
+    color: #ffffff; /* Color de texto blanco en el encabezado */
+}
+
+.table th, .table td {
+    text-align: left; /* Alinear el texto a la izquierda */
+    padding: 12px; /* Espacio interior en celdas */
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Color de fondo alternativo para filas pares */
+}
+
+.table-striped tbody tr:hover {
+    background-color: #e9ecef; /* Color de fondo al pasar el mouse */
+}
+
+/* Estilo para los títulos de cada campo */
+.table td strong {
+    font-weight: bold;
+    color: #333; /* Color de texto oscuro para los campos */
+}
+
+/* Estilo para mejorar la visualización en dispositivos móviles */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 8px; /* Reducir el espacio interior en celdas para pantallas pequeñas */
+    }
+
+    h1.text-center {
+        font-size: 1.8rem; /* Reducir el tamaño del título en dispositivos móviles */
+    }
+
+    .container {
+        padding: 15px; /* Ajustar el padding del contenedor para pantallas pequeñas */
+    }
+}
