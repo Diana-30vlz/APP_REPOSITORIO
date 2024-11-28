@@ -4,11 +4,12 @@ body {
 }
 
 .card {
-    margin: 20px;
-    padding: 20px;
+    margin: 50px;
+    padding: 10px;
     border-radius: 8px;
     background-color: white; /* Fondo blanco para las tarjetas */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    
 }
 
 h1 {
@@ -16,20 +17,26 @@ h1 {
     color: #004b69; /* Color del encabezado */
 }
 
+/* Ajusta la tabla para que no se desborde y tenga margen inferior */
 .table {
+    width: 90%; /* Ajusta el ancho de la tabla */
+    margin: 20px auto; /* Centra la tabla en la página */
+    margin-bottom: 40px; /* Añade espacio debajo de la tabla */
     border-radius: 8px;
     overflow: hidden; /* Esconde los bordes de la tabla */
 }
 
 .table th, .table td {
     text-align: center;
-    padding: 15px; /* Espaciado de las celdas */
+    padding: 10px; /* Espaciado interno de las celdas */
+    font-size: 14px; /* Tamaño del texto */
 }
 
 .table th {
     background-color: #004b69; /* Color de fondo de la cabecera */
     color: white; /* Color del texto de la cabecera */
 }
+
 
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f2f2f2; /* Color alternativo para filas */
@@ -39,12 +46,19 @@ h1 {
     background-color: #e0f7fa; /* Color de fondo al pasar el ratón */
 }
 
+
+
+
+
 .btn {
-    transition: background-color 0.3s, transform 0.2s; /* Animaciones suaves */
+    padding: 5px 10px; /* Reduce el padding del botón */
+    font-size: 14px; /* Cambia el tamaño de fuente */
+    border-radius: 5px; /* Bordes redondeados opcionales */
+    transition: background-color 0.3s, transform 0.2s; /* Mantiene la animación existente */
 }
 
 .btn:hover {
-    transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el ratón */
+    transform: scale(1.05); /* Efecto de hover */
 }
 
 @media (max-width: 768px) {

@@ -4,32 +4,29 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/stylesCreate_Paciente.css' %}">
 
-
 <style>
+
   body {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-    url("{% static 'img/medicina.jpg' %}") no-repeat center center fixed;
-background-size: cover;
-background-position: center; /* Centra la imagen */
-background-repeat: no-repeat; /* Evita que se repita */
-  }
+    font-family: 'Arial', sans-serif; /* Fuente del documento */
+    margin: 0; /* Sin márgenes en el cuerpo */
+    padding: 0; /* Sin padding en el cuerpo */
+    height: 100vh; /* Asegura que el cuerpo tenga el 100% de altura */
+    background: url("{% static 'img/medicina.jpg' %}") no-repeat center center fixed;
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que se repita la imagen */
+    position: relative; /* Necesario para otros elementos dentro de la página */
+    min-height: 100%; /* Asegura que el fondo cubra toda la altura */
+}
+
+
 </style>
-
-
-
-
 
 <h1>Crear nuevo registro</h1>  
 {{ error }}  
 
 <form action="/create_paciente/" method="POST">  
   {% csrf_token %}  
-  
-<!-- Usuario -->
- <!-- <div class="form-group">
-    <label for="username">Usuario:</label>
-    <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
-  </div>  -->
 
   <!-- Nombre(s) -->
   <div class="form-group">
@@ -49,45 +46,41 @@ background-repeat: no-repeat; /* Evita que se repita */
     <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" placeholder="Ingresa tu apellido materno" required>
   </div>
 
-
-<!-- Género -->
-<div class="form-group">
-  <label for="sexo">Género:</label>
-  <select class="form-control" id="sexo" name="sexo" required>
-      <option value="">Seleccione su género</option> <!-- Opción por defecto -->
-      <option value="masculino">Masculino</option>
-      <option value="femenino">Femenino</option>
-  </select>
-</div>
-
-<!-- Medicamentos -->
-<div class="form-group">
-  <label>Uso de medicamentos:</label><br>
-  <div>
-      <input type="radio" id="si" name="uso_de_medicamentos" value="si" required>
-      <label for="si">Si</label>
+  <!-- Género -->
+  <div class="form-group">
+    <label for="sexo">Género:</label>
+    <select class="form-control" id="sexo" name="sexo" required>
+        <option value="">Seleccione su género</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+    </select>
   </div>
-  <div>
-      <input type="radio" id="no" name="uso_de_medicamentos" value="no" required>
-      <label for="no">No</label>
+
+  <!-- Medicamentos -->
+  <div class="form-group">
+    <label>Uso de medicamentos:</label><br>
+    <div>
+        <input type="radio" id="si_medicamentos" name="uso_de_medicamentos" value="si" required>
+        <label for="si_medicamentos">Si</label>
+    </div>
+    <div>
+        <input type="radio" id="no_medicamentos" name="uso_de_medicamentos" value="no" required>
+        <label for="no_medicamentos">No</label>
+    </div>
   </div>
-</div>
 
-
-
-<!-- actividad_fisica -->
-<div class="form-group">
-  <label>Realiza actividad física:</label><br>
-  <div>
-      <input type="radio" id="si" name="actividad_fisica" value="si" required>
-      <label for="si">Si</label>
+  <!-- Actividad Física -->
+  <div class="form-group">
+    <label>Realiza actividad física:</label><br>
+    <div>
+        <input type="radio" id="si_actividad" name="actividad_fisica" value="si" required>
+        <label for="si_actividad">Si</label>
+    </div>
+    <div>
+        <input type="radio" id="no_actividad" name="actividad_fisica" value="no" required>
+        <label for="no_actividad">No</label>
+    </div>
   </div>
-  <div>
-      <input type="radio" id="no" name="actividad_fisica" value="no" required>
-      <label for="no">No</label>
-  </div>
-</div>
-
 
   <!-- Teléfono -->
   <div class="form-group">
@@ -107,22 +100,11 @@ background-repeat: no-repeat; /* Evita que se repita */
     <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
   </div>
 
-
+  <!-- IMC -->
   <div class="form-group">
-    <label for="direccion">IMC:</label>
+    <label for="imc">IMC:</label>
     <input type="text" class="form-control" id="imc" name="imc" placeholder="Ingrese el IMC" required>
-
-  <!-- Contraseña 
-  <div class="form-group">
-    <label for="password1">Contraseña:</label>
-    <input type="password" class="form-control" id="password1" name="password1" placeholder="Ingresa tu contraseña" required>
-  </div> -->
-
-  <!-- Confirmar Contraseña
-  <div class="form-group">
-    <label for="password2">Confirmar Contraseña:</label>
-    <input type="password" class="form-control" id="password2" name="password2" placeholder="Ingresa tu contraseña para confirmar" required>
-  </div> -->
+  </div>
 
   <button type="submit" class="btn">Guardar</button>  
 </form>

@@ -1,7 +1,81 @@
 {% extends 'base.html' %}
 
-{% block content %}  <!-- Inicia el bloque de contenido que se insertará en la plantilla base -->
+{% block content %}
+{% load static %}
+<script src="{% static 'js/opciones_doctor.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/homeDoctor.css' %}">
+<div class="container">
 
-<h1>Welcome to the Doctor's Dashboard</h1>
+    <style>
+        .container {
+            font-family: 'Times New Roman', Times, serif;
+            max-width: 100%;     /* Permite que se expanda completamente */
+            height: 800px;       /* Establece la altura del contenedor */
+            padding: 200px;       /* Espacio interno opcional */
+            box-sizing: border-box; /* Incluye el padding dentro del ancho y la altura */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url("{% static 'img/home_Doctor.jpg' %}") no-repeat center center fixed;
+                        background-size: cover;
+                        background-position: center; /* Centra la imagen */
+                        background-repeat: no-repeat; /* Evita que se repita */
+            animation: fadeIn 1s ease-in-out;  /* Aplica la animación de desvanecimiento */
+        }
+        
+      </style>
+
+
+
+<h1>CardioMetrics </h1>
+
+
+
+<H2 > Bienvenido {{ especialista.apellido_paterno }} {{ especialista.apellido_materno }} {{ especialista.nombre_especialista }}</H2>
+
+
+</div>
+
+
+
+
+
+<!-- Sección de opciones -->
+<div class="text">
+    <label for="Informacion">Información</label>
+
+
+
+<div class="option-row">
+    <div class="option-container" onclick="toggleContent('option1')">
+        <h3>¿Qué es CardioMetrics?</h3>
+        <div id="option1" class="option-content">
+            <p>CardioMetrics es una aplicación web que permite a los especialistas en cardiología medir y analizar las características de la frecuencia cardíaca y la tensión arterial de las personas.</p>
+        </div>
+    </div>
+
+    <div class="option-container" onclick="toggleContent('option2')">
+        <h3>Opción 2</h3>
+        <div id="option2" class="option-content">
+            <p>Información detallada de la opción 2. Aquí puedes poner más detalles o un resumen relevante para esta opción.</p>
+        </div>
+    </div>
+
+    <div class="option-container" onclick="toggleContent('option3')">
+        <h3>Opción 3</h3>
+        <div id="option3" class="option-content">
+            <p>Información detallada de la opción 3. Aquí puedes poner más detalles o un resumen relevante para esta opción.</p>
+        </div>
+    </div>
+
+    <div class="option-container" onclick="toggleContent('option4')">
+        <h3>Opción 4</h3>
+        <div id="option4" class="option-content">
+            <p>Información detallada de la opción 4. Aquí puedes poner más detalles o un resumen relevante para esta opción.</p>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
 
 {% endblock %}

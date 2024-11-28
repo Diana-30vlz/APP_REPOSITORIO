@@ -60,7 +60,9 @@ ROOT_URLCONF = 'djangocrud.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Backend de Django para plantillas
-        'DIRS': [],  # Directorios de plantillas (se puede especificar una lista)
+        'DIRS': [
+                BASE_DIR / 'paciente/templates',
+            ],  # Directorios de plantillas (se puede especificar una lista)
         'APP_DIRS': True,  # Habilitar búsqueda de plantillas en aplicaciones instaladas
         'OPTIONS': {
             'context_processors': [

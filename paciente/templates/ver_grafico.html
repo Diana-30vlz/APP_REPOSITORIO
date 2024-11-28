@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{%load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'css/ver_grafico.css' %}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Results</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Header -->
+        <header class="header">
+            <div class="title">General Results</div>
+            <div class="file-info"> HRV </div>
+            <div class="page-number">Page 1/2</div>
+        </header>
+
+        <!-- Main content -->
+        <main>
+            <!-- Section: ECG -->
+            <section class="graph-section">
+                <h2 class="section-title"> Electrocardiograma </h2>
+                <div class="graph-container">
+                    <!-- Exportación del json -->
+                    <div id="grafico_ecg"></div>
+                    <script id="graph_data" type="application/json">
+                        {{ graph_json|safe }}
+                    </script>
+                </div>
+
+                <div class="form-container">
+                    <label for="muestras_ecg" class="form-label">Rango muestras</label>
+                    <input type="number" id="muestras_ecg" value="{{ banda }}" min="1" step="1" class="form-input">
+                    <button onclick="actualizarGraficoECG()" class="form-button">Actualizar ECG</button>
+                </div>
+
+            </section>
+
+
+
+            <!-- Section: Tacograma -->
+            <section class="graph-section">
+                <h2 class="section-title">Tacograma</h2>
+                <div class="graph-container">
+                    <!-- Exportación del json -->
+                    <div id="tacograma"></div>
+                    <script id="graph_tacograma" type="application/json">
+                        {{ graph_json_tacograma|safe }}
+                    </script>
+                </div>
+                <!-- Boton de selección de muestras -->
+                <div>
+                    <label for="muestras_tacograma">Número de picos para Tacograma:</label>
+                    <input type="number" id="muestras_tacograma" value="{{ banda_tacograma }}" min="1" step="1">
+                    <button onclick="actualizarGraficoTacograma()">Actualizar Tacograma</button>
+                </div>
+
+            </section>
+
+
+            
+            <!-- Bloque para datos completos -->
+            <script id="datos_completos" type="application/json">
+                {{ datos_completos_json|safe }}
+            </script>
+
+
+            <script type="text/javascript">
+            // Cargar los datos iniciales desde el servidor
+                const graph_data_ecg = JSON.parse(document.getElementById('graph_data').textContent);
+                const graph_data_tacograma = JSON.parse(document.getElementById('graph_tacograma').textContent);
+                const datos_completos = JSON.parse(document.getElementById('datos_completos').textContent);
+                
+
+
+ const layout_ecg = {
+    title: {
+        font: { 
+            family: 'Arial, sans-serif', 
+            size: 24,
+            color: 'black',
+            x: 0.5, 
+        }
+    },
+    xaxis: {
+        title: 'Tiempo (segundos)',
+        titlefont: { 
+            family: 'Arial, sans-serif', 
+            size: 12,
+            color: 'black', 
+        },
+        zeroline: true,
+        zerolinecolor: 'black', 
+        zerolinewidth: 1,
+    },
+    yaxis: {
+        title: 'Voltaje (mV)',
+        titlefont: { 
+            family: 'Arial, sans-serif', 
+            size: 12,
+            color: 'black', 
+        },
+        zeroline: true, 
+        zerolinecolor: 'black', 
+        zerolinewidth: 1,
+    },
+    margin: { l: 50, r: 50, b: 50, t: 50 },
+    showlegend: true,
+};
+
+const data_ecg = graph_data_ecg.data.map((trace) => ({
+    ...trace,
+    line: {
+        color: 'navy', 
+        width: 2, 
+    },
+}));
+
+
+const layout_tacograma = {
+            title: {
+                text: 'Tacograma - Intervalos RR',
+                font: { 
+                    family: 'Arial, sans-serif', // Tipo de fuente
+                    size: 24, // Tamaño de la fuente
+                    color: 'black', // Color de la fuente
+                    x: 0.5, // Centrado del título
+                },
+            },
+            xaxis: {
+                title: 'Picos',
+                titlefont: { 
+                    family: 'Arial, sans-serif', // Tipo de fuente
+                    size: 12, // Tamaño de la fuente
+                    color: 'black', // Color de la fuente
+                },
+                zeroline: true, // Mostrar la línea del eje X donde y = 0
+                zerolinecolor: 'black', // Color de la línea cero
+                zerolinewidth: 1, // Ancho de la línea cero
+            },
+            yaxis: {
+                title: 'Intervalo RR (ms)',
+                titlefont: { 
+                    family: 'Arial, sans-serif', // Tipo de fuente
+                    size: 12, // Tamaño de la fuente
+                    color: 'black', // Color de la fuente
+                },
+                zeroline: true, // Mostrar la línea del eje Y donde x = 0
+                zerolinecolor: 'black', // Color de la línea cero
+                zerolinewidth: 1, // Ancho de la línea cero
+            },
+            margin: { l: 50, r: 50, b: 50, t: 50 }, // Márgenes más delgados
+            showlegend: true, // Mostrar la leyenda
+        };
+
+        const data_tacograma = graph_data_tacograma.data.map((trace) => ({
+            ...trace,
+            line: {
+                color: 'navy', // Cambia el color del trazo a navy
+                width: 2, // Define el grosor del trazo
+            },
+            marker: { color: 'blue', size: 5 }, // Personalización de los puntos
+        }));
+
+
+Plotly.newPlot('grafico_ecg', data_ecg, layout_ecg, {responsive: true});
+Plotly.newPlot('tacograma', data_tacograma, layout_tacograma, {responsive: true});
+
+
+
+
+
+function actualizarGraficoECG() {
+            const muestras_ecg = parseInt(document.getElementById("muestras_ecg").value);
+            const tiempo_filtrado = datos_completos.ecg.tiempo.slice(0, muestras_ecg);
+            const voltaje_filtrado = datos_completos.ecg.voltaje.slice(0, muestras_ecg);
+
+            // Actualizar el gráfico ECG
+            const ecg_data = [{
+                x: tiempo_filtrado,
+                y: voltaje_filtrado,
+                type: 'scatter',
+                mode: 'lines',
+                name: 'ECG',
+                line: { color: 'navy', width: 2 }
+            }];
+            Plotly.react('grafico_ecg', ecg_data, {
+                title: 'Gráfico ECG',
+                xaxis: { title: 'Tiempo (s)' },
+                yaxis: { title: 'Voltaje (mV)' }
+            });
+        }
+        // Actualizar solo el gráfico Tacograma
+function actualizarGraficoTacograma() {
+            // Obtener el número de picos para el Tacograma
+            const muestras_tacograma = parseInt(document.getElementById("muestras_tacograma").value);
+
+            // Filtrar datos del Tacograma
+            const picos_filtrados = datos_completos.tacograma.picos.slice(0, muestras_tacograma);
+            const intervalos_filtrados = datos_completos.tacograma.intervalos.slice(0, muestras_tacograma);
+
+            // Actualizar el gráfico Tacograma
+            const tacograma_data = [{
+                x: picos_filtrados,
+                y: intervalos_filtrados,
+                type: 'scatter',
+                mode: 'lines+markers',
+                name: 'Tacograma',
+                line: { color: 'black' },
+                marker: { color: 'blue', size: 5 }
+            }];
+            Plotly.react('tacograma', tacograma_data, {
+                title: 'Tacograma - Intervalos RR',
+                xaxis: { title: 'Tiempo (s)' },
+                yaxis: { title: 'Intervalo RR (ms)' }
+            });
+        }
+
+
+            </script><!-- Termina la sección de JS-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Bloque para datos completos -->
+<script id="datos_completos" type="application/json">
+    {{ datos_completos_json|safe }}
+</script>
+
+<main>
+    <!-- Histogramas: Nueva posición antes de los resultados del dominio del tiempo -->
+    <div class="distributions">
+        <h3>Distribuciones</h3>
+        <div class="histograms">
+            <section class="graph-section">
+                <h2 class="section-title">Histograma intervalos RR</h2>
+                <div class="graph-container">
+                    <div id="histograma_rr"></div>
+                    <script id="graph_histogramaRR" type="application/json">
+                        {{ graph_json_RR|safe }}
+                    </script>
+                </div>
+            </section>
+
+            <section class="graph-section">
+                <h2 class="section-title">Histograma Frecuencia Cardiaca (FC)</h2>
+                <div class="graph-container">
+                    <div id="histograma_hr"></div>
+                    <script id="graph_histogramaHR" type="application/json">
+                        {{ graph_json_HR|safe }}
+                    </script>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Resultados del dominio del tiempo -->
+    <section class="results-section">
+        <div class="time-domain-results">
+            <h3>Resultados Dominio del tiempo</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Unidad</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>NNI (mean/min/max)</td>
+                        <td>(ms)</td>
+                        <td>[{{ analisis_tiempo.nni_mean }}] / [{{ analisis_tiempo.nni_min }}] / [{{ analisis_tiempo.nni_max }}]</td>
+                    </tr>
+                    <tr>
+                        <td>HR (mean/min/max)</td>
+                        <td>(lpm)</td>
+                        <td>[{{ analisis_tiempo.hr_mean }}] / [{{ analisis_tiempo.hr_min }}] / [{{ analisis_tiempo.hr_max }}]</td>
+                    </tr>
+                    <tr><td>STD_HR</td><td>(lpm)</td><td>[{{ analisis_tiempo.std_hr }}]</td></tr>
+                    <tr><td>NNI_DIFF (mean/min/max)</td><td>(ms)</td><td>[{{ analisis_tiempo.nni_diff_mean }}] / [{{ analisis_tiempo.nni_diff_min }}] / [{{ analisis_tiempo.nni_diff_max }}]</td></tr>
+                    <tr><td>SDNN</td><td>(ms)</td><td>[{{ analisis_tiempo.sdnn }}]</td></tr>
+                    <tr><td>SDANN</td><td>(ms)</td><td>[{{ analisis_tiempo.sdann }}]</td></tr>
+                    <tr><td>RMSSD</td><td>(ms)</td><td>[{{ analisis_tiempo.rmssd }}]</td></tr>
+                    <tr><td>SDSD</td><td>(ms)</td><td>[{{ analisis_tiempo.sdsd }}]</td></tr>
+                    <tr><td>NN50</td><td>()</td><td>[{{ analisis_tiempo.nn50 }}]</td></tr>
+                    <tr><td>PNN50</td><td>(%)</td><td>[{{ analisis_tiempo.pnn50 }}]</td></tr>
+                    <tr><td>NN20</td><td>()</td><td>[{{ analisis_tiempo.nn20 }}]</td></tr>
+                    <tr><td>RR_MEAN</td><td>(ms)</td><td>[{{ analisis_tiempo.rr_mean }}]</td></tr>
+                    <tr><td>TOTAL INTERVALOS RR</td><td>()</td><td>[{{ analisis_tiempo.total_intervalos_rr }}]</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+            <script type="text/javascript">
+
+
+
+
+ // Datos y configuraciones para el histograma RR
+const graph_data_histograma_rr = JSON.parse(document.getElementById('graph_histogramaRR').textContent);
+const layout_histogramaRR = {
+    title: {},
+    xaxis: { title: 'Intervalo RR (ms)', titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' },
+    zeroline: true,  // Mostrar la línea del eje X donde y = 0
+        zerolinecolor: 'black',  // Color de la línea cero
+        zerolinewidth: 1,  // Ancho de la línea cero
+        // Cálculo de nbinsx con la fórmula de Sturges
+        nbinsx: Math.ceil(Math.log2(graph_data_histograma_rr.data[0].x.length) + 1),  },
+    yaxis: { title: 'Frecuencia', titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' } },
+};
+const data_histogramaRR = graph_data_histograma_rr.data.map((trace) => ({
+    ...trace,
+    marker: { color: 'rgba(0, 128, 255, 0.7)', line: { color: 'rgb(0, 0, 128)', width: 1 } },
+}));
+Plotly.newPlot('histograma_rr', data_histogramaRR, layout_histogramaRR, { responsive: true });
+
+// Datos y configuraciones para el histograma HR
+const graph_data_histograma_hr = JSON.parse(document.getElementById('graph_histogramaHR').textContent);
+const layout_histogramaHR = {
+    title: {},
+    xaxis: { title: 'Frecuencia Cardiaca (bpm)', titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' },
+    zeroline: true,  // Mostrar la línea del eje X donde y = 0
+        zerolinecolor: 'black',  // Color de la línea cero
+        zerolinewidth: 1,  // Ancho de la línea cero
+        // Cálculo de nbinsx con la fórmula de Sturges
+        nbinsx: Math.ceil(Math.log2(graph_data_histograma_rr.data[0].x.length) + 1),  },
+    yaxis: { title: 'Frecuencia', titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' } },
+};
+const data_histogramaHR = graph_data_histograma_hr.data.map((trace) => ({
+    ...trace,
+    marker: { color: 'rgba(255, 0, 0, 0.7)', line: { color: 'rgb(128, 0, 0)', width: 1 } },
+}));
+Plotly.newPlot('histograma_hr', data_histogramaHR, layout_histogramaHR, { responsive: true });
+
+
+
+            </script>
+
+            <!-- Section: Frequency-Domain Results -->
+            <section class="frequency-results">
+
+                <h3>Frequency-Domain Results</h3>
+                <section class="graph-section">
+                    <div class="frequency-graphs">
+                        <h2 class="section-title">FFT Espectro</h2>
+                        <div class="graph-container">
+                            <div id="FFT"></div>
+                            <script id="graph_FFT" type="application/json">
+                                {{ graph_json_FFT|safe }}
+                            </script>
+                        </div>
+                    </div>
+                </section>
+                graph_json_Welch
+
+                <section class="graph-section">
+                    <div class="frequency-graphs">
+                        <h2 class="section-title">PSD </h2>
+                        <div class="graph-container">
+                            <div id="Welch"></div>
+                            <script id="graph_Welch" type="application/json">
+                                {{ graph_json_FFT|safe }}
+                            </script>
+                        </div>
+                    </div>
+                </section>
+                </div>
+
+                <script type="text/javascript">
+                    // Obtén los datos de la FFT desde el contenedor de script
+                    const graph_data_FFT = JSON.parse(document.getElementById('graph_FFT').textContent);
+                
+                    // Configuración del diseño del gráfico
+// Definición de las bandas de frecuencia con sus respectivos colores
+// Definición de las bandas de frecuencia con sus respectivos colores
+// Definición de las bandas de frecuencia con sus respectivos colores
+// Definición de las bandas de frecuencia con sus respectivos colores
+// Definir los colores para cada banda
+const bandas_Frecuencia = [
+    { rango: [0.0033, 0.04], color: 'rgba(240, 132, 8, 0.79)', nombre: 'VLF' },  // Banda VLF (0.0033 - 0.04 Hz)
+    { rango: [0.04, 0.15], color: 'rgba(142, 240, 0, 0.79)', nombre: 'LF' },   // Banda LF (0.04 - 0.15 Hz)
+    { rango: [0.15, 0.4], color: 'rgba(41, 199, 255, 0.79)', nombre: 'HF' }    // Banda HF (0.15 - 0.4 Hz)
+];
+
+// Función para generar los datos con las áreas coloreadas por bandas
+const generarDatosColoreados = (data) => {
+    const x = data.x;
+    const y = data.y;
+
+    // Array para almacenar los traces
+    const traces = [];
+
+    // Para cada banda de frecuencia, coloreamos el área correspondiente
+    bandas_Frecuencia.forEach((banda) => {
+        const indices = [];
+        const valores = [];
+
+        // Filtrar las frecuencias que caen dentro del rango de cada banda
+        for (let i = 0; i < x.length; i++) {
+            if (x[i] >= banda.rango[0] && x[i] <= banda.rango[1]) {
+                indices.push(x[i]);
+                valores.push(y[i]);
+            }
+        }
+
+        // Si hay valores dentro del rango de la banda, agregamos el trace correspondiente
+        if (indices.length > 0) {
+            traces.push({
+                x: indices,
+                y: valores,
+                mode: 'lines',
+                fill: 'tozeroy',
+                fillcolor: banda.color,  // Color de la banda
+                line: { color: banda.color },  // Línea con el mismo color
+                name: banda.nombre  // Nombre de la banda para la leyenda
+            });
+        }
+    });
+
+    return traces;
+};
+
+// Datos para el gráfico de la FFT
+const data_FFT = generarDatosColoreados(graph_data_FFT.data[0]);  // Usar el primer set de datos si tienes múltiples
+
+// Layout del gráfico
+const layout_FFT = {
+    title: graph_data_FFT.layout.title,
+    xaxis: {
+        title: graph_data_FFT.layout.xaxis.title,
+        range: [0, 0.5],  // Rango de frecuencias ajustable (puedes modificarlo si es necesario)
+        titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' },
+    },
+    yaxis: {
+        title: graph_data_FFT.layout.yaxis.title,
+        titlefont: { family: 'Arial, sans-serif', size: 12, color: 'black' },
+    },
+    showlegend: true  // Mostrar la leyenda para las bandas
+};
+
+// Renderiza el gráfico con los diferentes colores en función de las bandas de frecuencia
+Plotly.newPlot('FFT', data_FFT, layout_FFT, { responsive: true });
+
+
+
+
+                </script>
+                <table class="frequency-table">
+                    <thead>
+                        <tr>
+                            <th>Band</th>
+                            <th>Peak (Hz)</th>
+                            <th>Power (ms²)</th>
+                            <th>Power (log)</th>
+                            <th>Power (n.u.)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>LF (0.04-0.15 Hz)</td><td>0.040</td><td>635</td><td>6.45</td><td>42.3</td></tr>
+                        <!-- Add other rows as needed -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    
+    <li class="nav-item">
+        <a href="{% url 'generar_pdf' %}" class="nav-link">Ver informe</a>
+    </li>
+    
+
+</body>
+
+
+
+
+
+
+ 
+</html>

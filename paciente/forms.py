@@ -1,5 +1,5 @@
 from django import forms
-from .models import Paciente, Departamento, Especialista, AnalisisDominioFrecuencia, AnalisisDominioTiempo, ECG
+from .models import Paciente, Departamento, Especialista, ECG
 from django.contrib.auth.models import User
 
 class PacienteForm(forms.ModelForm):
@@ -44,63 +44,11 @@ class EspecialistaForm(forms.ModelForm):
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
         }
 
-class AnalisisDominioFrecuenciaForm(forms.ModelForm):
-    class Meta:
-        model = AnalisisDominioFrecuencia
-        fields = [
-            'tasa_muestreo',
-            'power_high_frequency',
-            'power_low_frequency',  
-            'potencia_total',
-            'lh_hf',
-            'espectro_frecuencias',
-            'psd',
-            'paciente',
-        ]
 
-class AnalisisDominioTiempoForm(forms.ModelForm):
-    class Meta:
-        model = AnalisisDominioTiempo
-        fields = [
-            'nni_mean',
-            'nni_min',
-            'nni_max',
-            'hr_mean',
-            'hr_min',
-            'hr_max',
-            'std_hr',
-            'nni_diff_mean',
-            'nni_diff_min',
-            'nni_diff_max',
-            'std_rr',
-            'ssdn_index',
-            'sdann',
-            'rmssd',
-            'sdsd',
-            'nn50',
-            'pnns50',
-            'nn20',
-            'rr_mean',
-            'total_intervalos_rr',
-            'histograma_rr',
-            'histograma_hr',
-            'histograma_nni',
-            'paciente',
-        ]
-
-class ECGForm(forms.ModelForm):
+class ExpedienteForm(forms.ModelForm):
     class Meta:
         model = ECG
-        fields = [
-            'archivo_ecg',
-            'comentarios',
-        ]
-        widgets = {
-            'fecha_informe': forms.DateInput(attrs={'type': 'date'}),
-        }
-
-
-
+        fields = ['archivo_ecg', 'comentarios']
 
 
 class UserRegistrationForm(forms.ModelForm):

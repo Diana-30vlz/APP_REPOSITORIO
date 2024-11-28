@@ -23,16 +23,20 @@ Ejemplos:
 from django.contrib import admin
 
 # Importa las funciones path de django.urls, que se utilizan para definir las rutas de URL.
-from django.urls import path
+from django.urls import path, include
 
 # Importa las vistas desde el módulo pacientes.
 from paciente import views
+
+from django.conf import settings
+from django.contrib.staticfiles.urls import static
+from django.conf.urls.static import static
+
+
 # La lista urlpatterns contiene las rutas de URL y las vistas asociadas.
 urlpatterns = [
     # Ruta para la página de inicio del sitio, asignada a la vista 'home'.
     path('', views.home, name='home'),
-    
-    
     
     path('homeDoctor/', views.homeDoctor, name='homeDoctor'),    
     # Ruta para el panel de administración de Django.
@@ -44,9 +48,6 @@ urlpatterns = [
     # Ruta para visualizar todos los pacientes, asignada a la vista 'pacientes'.
     path('pacientes/', views.pacientes, name='pacientes'),
     
-    # Ruta para visualizar los registros de pacientes completados, asignada a la vista 'pacientes_completed'.
-    path('pacientes_completed/', views.pacientes_completed, name='pacientes_completed'),
-    
     # Ruta para cerrar sesión, asignada a la vista 'signout'.
     path('logout/', views.signout, name='logout'),
     
@@ -57,7 +58,7 @@ urlpatterns = [
     path('create_paciente/', views.create_paciente, name='create_paciente'),
     
     # Ruta para ver los detalles de un paciente específico, utilizando el ID del paciente.
-    path('pacientes/<int:paciente_id>', views.paciente_detail, name='paciente_detail'),
+    path('pacientes/<int:paciente_id>', views.historial, name='historial'),
     
     # Ruta para marcar un paciente como completado, utilizando el ID del paciente.
     path('paciente/<int:paciente_id>/complete', views.complete_paciente, name='complete_paciente'),
@@ -65,12 +66,25 @@ urlpatterns = [
     # Ruta para eliminar un paciente específico, utilizando el ID del paciente.
     path('pacientes/<int:paciente_id>/eliminar', views.eliminar_paciente, name='eliminar_paciente'),
     
+    path('buscar/', views.buscar, name='buscar'),
     
+    path('pacientes/crear_informe/<int:paciente_id>/', views.crear_informe, name='crear_informe'),  # Cambia a la vista que necesites después de guardar
     
     # Ruta para editar un paciente específico, utilizando el ID del paciente.
     path('pacientes/<int:paciente_id>/editar', views.editar_paciente, name='editar_paciente'),
 
-    
-    path('perfil_especialista/', views.perfil_doc, name='perfilEspecialista'), # Nueva vista para datos personales  
+    path('perfil_especialista/', views.perfil_doc, name='perfilEspecialista'), # Nueva vista para datos personales 
+     
     path('error/', views.error_page, name='error_page'),  # Agrega esta línea
+    
+    path('pacientes/ver_grafico/<int:paciente_id>/', views.ver_grafico, name = 'ver_grafico'),  # Nueva vista para ver el gráfico de HRV
+    
+    path('pacientes/eliminar_informe/<int:paciente_id>/eliminar',views.eliminar_informe, name='eliminar_informe'),
+
+    path('generar_pdf/', views.generar_pdf, name='generar_pdf'),
+    
+
     ]   
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

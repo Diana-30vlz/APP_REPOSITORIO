@@ -15,9 +15,13 @@ body {
     margin: 0 auto; /* Centrar el contenedor */
 }
 
+
+
 /* Título */
-h1.text-center {
-    color: #031931; /* Color de texto azul para el título */
+.card-header {
+    text-align: center;
+    padding: 40px;
+    color: #013670; /* Color de texto azul para el título */
     margin-bottom: 20px; /* Espacio debajo del título */
     font-size: 2.2rem; /* Tamaño del título */
     font-weight: bold; /* Texto en negrita */
@@ -59,7 +63,7 @@ h1.text-center {
         padding: 8px; /* Reducir el espacio interior en celdas para pantallas pequeñas */
     }
 
-    h1.text-center {
+    .card-header.text-center {
         font-size: 1.8rem; /* Reducir el tamaño del título en dispositivos móviles */
     }
 

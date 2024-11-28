@@ -82,30 +82,32 @@ class ECG(models.Model):
        
 class AnalisisDominioFrecuencia(models.Model):
     id_analisis_frecuencia = models.AutoField(primary_key=True)
-    tasa_muestreo = models.IntegerField()
-    power_high_frequency = models.FloatField()
-    power_low_frequency = models.FloatField()
-    potencia_total = models.FloatField()
-    lh_hf = models.FloatField()
-    espectro_frecuencias = models.ImageField(upload_to='media/', null = True)
-    psd = models.ImageField(upload_to='media/', null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column= 'id_paciente', null=False)
-    fecha_creacion = models.DateTimeField(auto_now_add=True, null=True)
+    potencia_vlf = models.FloatField(default=0.0)
+    pico_vlf = models.FloatField(default=0.0)
+    potencia_vlf_log = models.FloatField(default=0.0)
+    porcentaje_vlf = models.FloatField(default=0.0)
+    potencia_lf = models.FloatField(default=0.0)
+    pico_lf = models.FloatField(default=0.0)
+    potencia_lf_log = models.FloatField(default=0.0)
+    porcentaje_lf = models.FloatField(default=0.0)
+    potencia_hf = models.FloatField(default=0.0)
+    pico_hf = models.FloatField(default=0.0)
+    potencia_hf_log = models.FloatField()
+    porcentaje_hf = models.FloatField(default=0.0)
+    potencia_total = models.FloatField(default=0.0)
+    potencia_lf_nu = models.FloatField(default=0.0)
+    potencia_hf_nu = models.FloatField(default=0.0)
+    lf_hf_ratio = models.FloatField(default=0.0)
     ecg = models.ForeignKey(ECG, on_delete=models.CASCADE, db_column='ID_ECG')
-    
+
+    class Meta:
+        db_table = 'analisis_dominio_frecuencia'
     def __str__(self):
         return f'AF_{self.paciente.apellido_paterno[0]}{self.paciente.apellido_materno[0]}{self.paciente.nombre_paciente[0]}_{self.ecg.fecha_informe.strftime("%Y%m%d_%H:%M:%S")}'
 
-    def delete(self, using = None, keep_parents = False):
-        if self.psd:
-            self.psd.delete(save=False)
-
-        if self.espectro_frecuencias:
-            self.espectro_frecuencias.delete(save=False)
-
-        return super().delete(using=using, keep_parents=keep_parents)
 
 class AnalisisDominioTiempo(models.Model):
+    #'nni_min'
     id_analisis_tiempo = models.AutoField(primary_key=True)
     nni_mean = models.FloatField()
     nni_min = models.FloatField()
@@ -117,32 +119,23 @@ class AnalisisDominioTiempo(models.Model):
     nni_diff_mean = models.FloatField()
     nni_diff_min = models.FloatField()
     nni_diff_max = models.FloatField()
-    std_rr = models.FloatField()
-    ssdn_index = models.FloatField()
+    sdnn = models.FloatField()
+    sdnn_index = models.FloatField()
     sdann = models.FloatField()
     rmssd = models.FloatField()
-    sdsd = models.FloatField(default=0.0)
+    sdsd = models.FloatField()
     nn50 = models.FloatField()
-    pnns50 = models.FloatField()
+    pnn50 = models.FloatField()
     nn20 = models.FloatField()
     rr_mean = models.FloatField()
+    tinn_n = models.FloatField(default=0.0)
+    tinn_m = models.FloatField(default=0.0)
+    tinn= models.FloatField(default=0.0)
+    tri_index = models.FloatField(default=0.0)
     total_intervalos_rr = models.IntegerField()
-    histograma_rr = models.ImageField(upload_to='media/', null=True )
-    histograma_hr = models.ImageField(upload_to='media/', null=True)
-    histograma_nni = models.ImageField(upload_to='media/', null=True)
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='id_paciente', null=False)
-    fecha_creacion = models.DateTimeField(auto_now_add=True, null =True)
+    ecg = models.OneToOneField(ECG, on_delete=models.CASCADE, db_column='ID_ECG')
 
-    
+    class Meta:
+        db_table = 'analisis_dominio_tiempo'
     def __str__(self):
-        return f'AT_{self.paciente.apellido_paterno[0]}{self.paciente.apellido_materno[0]}{self.paciente.nombre_paciente[0]}_{self.fecha_creacion.strftime("%Y%m%d_%H:%M:%S")}'
-    
-    def delete(self, using = None, keep_parents = False):
-        if self.histograma_rr:
-            self.histograma_rr.delete(save=False)
-        if self.histograma_hr:
-            self.histograma_hr.delete(save=False)
-        if self.histograma_nni:
-            self.histograma_nni.delete(save=False)
-        #mantener la herencia de datos 
-        super().delete(using=using, keep_parents=keep_parents)
+        return f'AT_{self.paciente.apellido_paterno[0]}{self.paciente.apellido_materno[0]}{self.paciente.nombre_paciente[0]}_{self.ecg.fecha_informe.strftime("%Y%m%d_%H:%M:%S")}'

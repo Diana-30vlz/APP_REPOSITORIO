@@ -4,8 +4,14 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/stylesPerfilEspecialista.css' %}">
+
+<div class="card-header">
+    Perfil del especialista {{ nombre_especialista }} {{ apellido_paterno }} {{ apellido_materno }}
+</div>
+
+
 <div class="container mt-5">
-    <h1 class="text-center">Perfil del Especialista</h1>
+    
     
     {% if error %}  <!-- Verifica si hay un error -->
     <div class="alert alert-danger">{{ error }}</div>  <!-- Muestra un mensaje de error en un div de alerta -->

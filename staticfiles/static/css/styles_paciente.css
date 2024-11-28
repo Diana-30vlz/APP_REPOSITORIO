@@ -17,23 +17,26 @@ h1 {
     color: #004b69; /* Color del encabezado */
 }
 
+/* Ajusta la tabla para que no se desborde y tenga margen inferior */
 .table {
     width: 90%; /* Ajusta el ancho de la tabla */
     margin: 20px auto; /* Centra la tabla en la página */
+    margin-bottom: 40px; /* Añade espacio debajo de la tabla */
     border-radius: 8px;
     overflow: hidden; /* Esconde los bordes de la tabla */
 }
 
 .table th, .table td {
     text-align: center;
-    padding: 10px; /* Reduce el espaciado de las celdas */
-    font-size: 14px; /* Cambia el tamaño de fuente */
+    padding: 10px; /* Espaciado interno de las celdas */
+    font-size: 14px; /* Tamaño del texto */
 }
 
 .table th {
     background-color: #004b69; /* Color de fondo de la cabecera */
     color: white; /* Color del texto de la cabecera */
 }
+
 
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #f2f2f2; /* Color alternativo para filas */
@@ -42,6 +45,9 @@ h1 {
 .table-striped tbody tr:hover {
     background-color: #e0f7fa; /* Color de fondo al pasar el ratón */
 }
+
+
+
 
 
 .btn {
