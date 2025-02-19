@@ -56,43 +56,99 @@
     </select>
   </div>
 
-  <!-- Medicamentos -->
+
+  <!-- Medicamentos (campo de texto en lugar de opciones) -->
   <div class="form-group">
-    <label>Uso de medicamentos:</label><br>
-    <div>
-        <input type="radio" id="si_medicamentos" name="uso_de_medicamentos" value="si" required>
-        <label for="si_medicamentos">Si</label>
-    </div>
-    <div>
-        <input type="radio" id="no_medicamentos" name="uso_de_medicamentos" value="no" required>
-        <label for="no_medicamentos">No</label>
-    </div>
+    <label for="medicamentos">Uso de medicamentos:</label>
+    <input type="text" class="form-control" id="medicamentos" name="uso_de_medicamentos" placeholder="Escribe si usas medicamentos" required>
   </div>
 
-  <!-- Actividad Física -->
+
+  <!-- Actividad Física (solo se puede seleccionar una opción) -->
   <div class="form-group">
     <label>Realiza actividad física:</label><br>
-    <div>
-        <input type="radio" id="si_actividad" name="actividad_fisica" value="si" required>
-        <label for="si_actividad">Si</label>
-    </div>
-    <div>
-        <input type="radio" id="no_actividad" name="actividad_fisica" value="no" required>
-        <label for="no_actividad">No</label>
+    <div class="checkbox-container">
+      <label class="checkbox-label">
+        <input type="checkbox" id="actividad_nulo" name="actividad_fisica" value="nulo">
+        <span class="checkmark"></span>
+        Nulo
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="actividad_ligera" name="actividad_fisica" value="ligera">
+        <span class="checkmark"></span>
+        Intensidad ligera
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="actividad_moderada" name="actividad_fisica" value="moderada">
+        <span class="checkmark"></span>
+        Intensidad moderada
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="actividad_vigorosa" name="actividad_fisica" value="vigorosa">
+        <span class="checkmark"></span>
+        Intensidad vigorosa
+      </label>
     </div>
   </div>
 
-  <!-- Teléfono -->
-  <div class="form-group">
-    <label for="telefono">Teléfono:</label>
-    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono" required>
-  </div>
 
-  <!-- Correo Electrónico -->
+  <script>
+    // JavaScript para asegurarse que solo una opción esté seleccionada
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="actividad_fisica"]');
+    
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        // Si se selecciona una casilla, desmarcar las demás
+        checkboxes.forEach(otherCheckbox => {
+          if (otherCheckbox !== checkbox) {
+            otherCheckbox.checked = false;
+          }
+        });
+      });
+    });
+  </script>
+
+
+ <!-- Teléfono -->
+ <div class="form-group">
+  <label for="telefono">Teléfono:</label>
+  <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingresa tu número de teléfono" required maxlength="10" pattern="\d{10}">
+  <small id="telefonoHelp" class="form-text text-muted">
+    El número debe tener exactamente 10 dígitos y ser numérico.
+  </small>
+</div>
+
+
+ <!-- Correo Electrónico -->
   <div class="form-group">
     <label for="correo">Correo Electrónico:</label>
     <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingresa tu correo electrónico" required>
+    <small id="emailHelp" class="form-text text-muted">
+      El correo debe contener un `@` y ser un dominio permitido como gmail.com, yahoo.com, outlook.com o .gob
+    </small>
+    <div id="emailError" style="color: red; display: none;">
+      <small>Por favor, ingresa un correo electrónico válido.</small>
+    </div>
   </div>
+
+  <script>
+    // Validación del correo electrónico
+    document.getElementById("correo").addEventListener("blur", function() {
+      const email = this.value;
+      const regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|gob\.mx)$/;
+      const emailError = document.getElementById("emailError");
+  
+      if (!regex.test(email)) {
+        emailError.style.display = "block";
+      } else {
+        emailError.style.display = "none";
+      }
+    });
+  </script>
+
+
+
+
 
   <!-- Fecha de nacimiento -->
   <div class="form-group">
@@ -103,7 +159,10 @@
   <!-- IMC -->
   <div class="form-group">
     <label for="imc">IMC:</label>
-    <input type="text" class="form-control" id="imc" name="imc" placeholder="Ingrese el IMC" required>
+    <input type="number" class="form-control" id="imc" name="imc" placeholder="Ingrese el IMC" required min="0" max="50">
+    <small id="imcHelp" class="form-text text-muted">
+      El IMC debe estar entre 0 y 50.
+    </small>
   </div>
 
   <button type="submit" class="btn">Guardar</button>  

@@ -3,17 +3,40 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #000000;
 }
+
+
+header{
+    background-color: #8dafe2;
+    padding: 10px;
+}
+    
+title{
+    font-size: 24px;
+    font-weight: bold;
+    
+    
+}
+
+    /* Estilo para el main content */
+main {
+        padding: 20px;
+    }
+
+section {
+        margin-bottom: 30px;
+    }
+
+
 
 /* Container */
 .container {
-    width: 90%;
+    width: auto;
     margin: 20px auto;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Header styles */
@@ -22,7 +45,6 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 2px solid #ddd;
 }
 
 .header .title {
@@ -40,17 +62,32 @@ body {
 .section-title {
     font-size: 20px;
     margin-bottom: 10px;
-    color: navy;
+    color: #0030ff;
 }
 
 /* Graph container */
 .graph-container {
     margin: 20px 0;
-    padding: 10px;
+    padding: 30px;
     border: 1px solid #ddd;
-    background-color: #fafafa;
-    border-radius: 5px;
+    background-color: #dddee0;
+ 
+    width: auto;
+    height: auto;
 }
+
+.graph-section{
+ 
+    width: auto;
+    align-items: center;
+
+}
+
+
+.tacograma{
+    max-width: auto;
+}
+
 
 /* Form styles */
 .form-container {
@@ -73,7 +110,7 @@ body {
 }
 
 .form-button {
-    background-color: navy;
+    background-color: #3f54a3;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -94,15 +131,18 @@ body {
 }
 
 .results-section th, .results-section td {
-    border: 1px solid #ddd;
+    border: 1px solid #e1dbdb;
     padding: 8px;
-    text-align: center;
+    text-align: left;
 }
 
 .results-section th {
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: #3f54a3;
+    color: #ffffff;
 }
+
+
+
 
 /* Histogram section */
 .distributions {
@@ -112,7 +152,7 @@ body {
 .histograms {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 0px;
 }
 
 .histograms .graph-section {
@@ -120,7 +160,9 @@ body {
 }
 
 .histograms .graph-container {
-    height: 400px;
+    height: 500px;
+    width: 600px;
+   
 }
 
 /* Responsive styles */
@@ -135,8 +177,39 @@ body {
     }
 }
 
+    .frequency-table th{
+    width: 2%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+
+.full-width-table th, .full-width-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    /* Estilo para las tablas */
+.full-width-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    /* Asegura que las tablas ocupen el ancho total disponible */
+.full-width-table td {
+        word-wrap: break-word;
+    }
+
+table th{
+    background-color: #3f54a3;
+    color: white;
+}
+
 /* Estilo base para las filas de la tabla */
 table tr {
+    text-align: center;
     transition: all 0.3s ease-in-out; /* Transición suave para el efecto */
 }
 
@@ -158,7 +231,36 @@ table tr:hover {
 
 /* Asegurarse de que los gráficos, tablas e imágenes sean visibles en el PDF */
 .pdf-mode .graph-container,
+.pdf-mode .graph-section
 .pdf-mode .results-section table,
 .pdf-mode img {
     display: block; /* Asegura que los gráficos, tablas y las imágenes se muestren en el PDF */
+}
+
+
+
+
+    /* Imprimir */
+@media print {
+        button {
+            display: none;
+        }
+
+        body {
+            font-size: 12px;
+        }
+
+        .header {
+            margin-bottom: 10px;
+        }
+    }
+
+
+button{
+    background-color: #3f54a3;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
 }

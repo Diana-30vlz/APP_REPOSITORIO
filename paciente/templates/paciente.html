@@ -7,7 +7,6 @@
 <h1>Registros de Pacientes</h1>
 
 
-
 <div class="card">
   <div class="card-header">    
     <form class="nav-item" method="GET" action="{% url 'pacientes' %}">
@@ -60,7 +59,9 @@
                   <a class="btn btn-info" href="{% url 'editar_paciente' paciente.id_paciente %}">Editar</a>
                   <a class="btn btn-warning" href="{% url 'historial' paciente.id_paciente %}">Expediente</a>
                   <a class="btn btn-danger" href="{% url 'eliminar_paciente' paciente.id_paciente %}" onclick="return confirm('¿Estás seguro de eliminar este registro?')">Borrar</a>
-              </td>
+
+
+                </td>
           </tr>
       {% endfor %}
   </tbody>

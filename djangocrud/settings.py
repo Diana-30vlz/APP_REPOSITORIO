@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',        # Manejo de sesiones
     'django.contrib.messages',        # Mensajes de notificación
     'django.contrib.staticfiles',     # Archivos estáticos
-    'paciente'                      # Tu aplicación 'pacientes'
+    'paciente',                    # Tu aplicación 'pacientes'
 ]
 
 # Middleware que se aplicará a las solicitudes y respuestas.
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',  # Manejo de autenticación
     'django.contrib.messages.middleware.MessageMiddleware',  # Manejo de mensajes
     'django.middleware.clickjacking.XFrameOptionsMiddleware',  # Protección contra clickjacking
+
 ]
 
 # Ruta de configuración de URL raíz para el proyecto.
@@ -60,9 +61,7 @@ ROOT_URLCONF = 'djangocrud.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',  # Backend de Django para plantillas
-        'DIRS': [
-                BASE_DIR / 'paciente/templates',
-            ],  # Directorios de plantillas (se puede especificar una lista)
+        'DIRS': [],  # Directorios de plantillas (se puede especificar una lista)
         'APP_DIRS': True,  # Habilitar búsqueda de plantillas en aplicaciones instaladas
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +84,7 @@ WSGI_APPLICATION = 'djangocrud.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Motor de base de datos MySQL
-        'NAME': 'seniales_ecg',  # Nombre de la base de datos creada
+        'NAME': 'senecg2',  # Nombre de la base de datos creada
         'USER': 'root',  # Usuario de MySQL
         'PASSWORD': '',  # Contraseña de MySQL (en blanco por defecto)
         'HOST': '127.0.0.1',  # Dirección del servidor MySQL (localhost)
@@ -143,3 +142,13 @@ LOGIN_URL = '/signin'  # URL de inicio de sesión
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # Establece el tipo de campo de clave primaria por defecto
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
+#EMAIL_HOST_USER = 'vlzdiana954@gmail.com'  # Tu correo Gmail
+#EMAIL_HOST_PASSWORD = 'TatEdg45*'  # Genera una contraseña de aplicación en Gmail
+
+
+INTERNAL_IPS = ['127.0.0.1']
+

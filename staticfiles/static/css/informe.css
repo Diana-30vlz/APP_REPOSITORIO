@@ -1,46 +1,39 @@
-/* Estilo general */
+/* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
 }
 
-/* Título */
-h1 {
-    text-align: center;
-    color: #2c3e50;
-}
-
-/* Contenido */
-.contenido {
-    margin-top: 20px;
-}
-
-/* Tabla */
-.tabla {
-    width: 100%;
+/* Estilo de las tablas */
+table {
+    width: 50%;
+    margin: 20px auto;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
-.tabla th, .tabla td {
-    border: 1px solid #ddd;
-    padding: 8px;
+th, td {
+    padding: 10px;
     text-align: left;
+    border: 1px solid #ddd;
 }
 
-.tabla th {
+th {
     background-color: #f2f2f2;
 }
 
-/* Datos */
-.datos {
-    font-weight: bold;
+/* Estilo de los encabezados */
+h1, h2 {
+    text-align: center;
+    color: #333;
 }
 
-.nota {
-    color: red;
+/* Estilo de las secciones */
+section {
+    margin-bottom: 30px;
 }
+
 
 /* Imágenes */
 img {

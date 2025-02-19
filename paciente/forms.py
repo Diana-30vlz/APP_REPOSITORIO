@@ -17,6 +17,7 @@ class PacienteForm(forms.ModelForm):
             'actividad_fisica',
             'imc'
         ]
+        
         widgets = {
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
         }
@@ -49,7 +50,9 @@ class ExpedienteForm(forms.ModelForm):
     class Meta:
         model = ECG
         fields = ['archivo_ecg', 'comentarios']
-
+        widgets = {
+                    'archivo_ecg': forms.FileInput(attrs={'accept': '.txt, .csv'})
+                }
 
 class UserRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)

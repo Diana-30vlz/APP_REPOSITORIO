@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 import hashlib
 from django.core.validators import FileExtensionValidator
 import os
-
+import datetime
+from django.db.models import Max
 # Clase Paciente que representa los datos de un paciente en la base de datos
 
 class Paciente(models.Model):
@@ -19,10 +20,29 @@ class Paciente(models.Model):
     imc = models.FloatField()
     uso_de_medicamentos = models.CharField(max_length=100, null=True, blank=True, verbose_name= 'Medicamentos')  # Nuevo campo
     actividad_fisica = models.CharField(max_length=100, null=True, blank=True, verbose_name= 'Actividad física')      # Nuevo campo
-    foto = models.ImageField(upload_to=' ', verbose_name= 'Fotografía del paciente', null=True)
+
     
     # Relación con Especialista: cada paciente está vinculado a un especialista específico
     especialista = models.ForeignKey('Especialista', on_delete=models.CASCADE, related_name="pacientes")
+
+    def generar_id_paciente(self):
+        # Obtener el año y mes actual
+        current_year = datetime.datetime.now().year
+        current_month = datetime.datetime.now().month
+        
+        # Obtener el último número de registro para el año y mes actuales
+        last_paciente = Paciente.objects.filter(id_paciente__startswith=f"PCT{current_year}{str(current_month).zfill(2)}") \
+                                        .aggregate(last_id=Max('id_paciente'))
+
+        # Si ya hay registros, obtenemos el número más alto, si no, iniciamos en 1
+        if last_paciente['last_id']:
+            last_number = int(last_paciente['last_id'][-3:])  # Extraemos los últimos 3 dígitos
+            new_number = last_number + 1
+        else:
+            new_number = 1  # Si no hay registros, comenzamos desde 1
+
+        # Generamos el ID con el prefijo, el año, el mes y el número secuencial
+        return f"PCT{current_year}{str(current_month).zfill(2)}{str(new_number).zfill(3)}"
 
     def __str__(self):
         return f"{self.nombre_paciente} {self.apellido_paterno} - {self.especialista.user.username}"
@@ -62,7 +82,7 @@ class ECG(models.Model):
     archivo_ecg = models.FileField(upload_to= 'archivo_ecg/', validators=[FileExtensionValidator(allowed_extensions=['txt', 'csv'])])
     fecha_informe = models.DateTimeField(auto_now_add=True)
     comentarios = models.TextField()
-    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='ID_PACIENTE')
+    paciente = models.ForeignKey(Paciente, on_delete=models.CASCADE, db_column='id_paciente')
     homoclave = models.CharField(max_length=64, unique=True, blank=True, null=True)  # Nuevo campo para homoclave
 
     def save(self, *args, **kwargs):

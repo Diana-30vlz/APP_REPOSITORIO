@@ -81,8 +81,6 @@ label {
         opacity: 1;   /* Al final se vuelve completamente visible */
     }
 }
-
-
 .option-row {
     display: flex;
     grid-template-columns: repeat(1, 1fr);  /* Crear 1 columna */
@@ -90,8 +88,6 @@ label {
     justify-items: center;  /* Centra los elementos horizontalmente */
     align-items: center;  /* Centra los elementos verticalmente */
 }
-
-
 .option-container {
     width: 800px;  /* Establece la anchura de 300px */
     margin: 20px;
@@ -101,12 +97,10 @@ label {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  /* Sombras más pequeñas */
     font-size: 14px;  /* Fuente más pequeña */
 }
-
 .option-container:hover {
     background-color: #0a8181;  /* Color al pasar el mouse */
     box-shadow: 0 2px 5px #000000;  /* Aumenta ligeramente la sombra al pasar el mouse */
 }
-
 .option-content {
     max-height: 0;  /* Comienza con una altura de cero */
     opacity: 0;  /* Comienza invisible */
@@ -117,7 +111,6 @@ label {
     margin-top: 5px;
     transition: max-height 1s ease, opacity 1s ease;  /* Transición suave para altura y opacidad */
 }
-
 /* Despliegue automático al pasar el mouse */
 .option-container:hover .option-content {
     max-height: 100px;  /* Ajusta este valor según el contenido */

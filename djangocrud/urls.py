@@ -42,20 +42,22 @@ urlpatterns = [
     # Ruta para el panel de administración de Django.
     path('admin/', admin.site.urls),
     
+    # Ruta para iniciar sesión, asignada a la vista 'signin'.
+    path('signin/', views.signin, name='signin'),
+    
     # Ruta para el registro de nuevos usuarios, asignada a la vista 'signup'.
     path('signup/', views.signup, name='signup'),
+    
+    path('signout/', views.signout, name='signout'),
     
     # Ruta para visualizar todos los pacientes, asignada a la vista 'pacientes'.
     path('pacientes/', views.pacientes, name='pacientes'),
     
-    # Ruta para cerrar sesión, asignada a la vista 'signout'.
-    path('logout/', views.signout, name='logout'),
-    
-    # Ruta para iniciar sesión, asignada a la vista 'signin'.
-    path('signin/', views.signin, name='signin'),
     
     # Ruta para crear un nuevo registro de paciente, asignada a la vista 'create_paciente'.
     path('create_paciente/', views.create_paciente, name='create_paciente'),
+    
+    path('visualizacion_informe/<int:paciente_id>/', views.visualizacion_informe, name='visualizacion_informe'),
     
     # Ruta para ver los detalles de un paciente específico, utilizando el ID del paciente.
     path('pacientes/<int:paciente_id>', views.historial, name='historial'),
@@ -77,12 +79,11 @@ urlpatterns = [
      
     path('error/', views.error_page, name='error_page'),  # Agrega esta línea
     
-    path('pacientes/ver_grafico/<int:paciente_id>/', views.ver_grafico, name = 'ver_grafico'),  # Nueva vista para ver el gráfico de HRV
+    path('pacientes/ver_grafico/<int:ecg_id>/', views.ver_grafico, name = 'ver_grafico'),  # Nueva vista para ver el gráfico de HRV
     
     path('pacientes/eliminar_informe/<int:paciente_id>/eliminar',views.eliminar_informe, name='eliminar_informe'),
 
     path('generar_pdf/', views.generar_pdf, name='generar_pdf'),
-    
 
     ]   
 
